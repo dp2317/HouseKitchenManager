@@ -1,0 +1,53 @@
+﻿@using HouseKitchenManager.Models
+@{
+    ViewData["Title"] = "Home";
+    var summary = ViewBag.Summary as IEnumerable<dynamic> ?? new List<dynamic>();
+}
+
+<h2 class="text-center mb-4">🏠 House Members</h2>
+
+<div class="row">
+    @foreach (var m in summary)
+    {
+        var avatarUrl = $"https://api.dicebear.com/7.x/fun-emoji/svg?seed={m.Name}";
+        double rating = m.AvgRating != null ? Convert.ToDouble(m.AvgRating) : 0.0;
+
+        int fullStars = (int)Math.Floor(rating);
+
+        <div class="col-12 col-md-4 mb-4">
+            <div class="card shadow text-center p-3">
+
+                <!-- 🧑 Cartoon Avatar -->
+                <img src="@avatarUrl"
+                     class="avatar"
+                     style="background:@m.ColorHex; padding:8px;" />
+
+                <h5 class="mt-3">@m.Name</h5>
+
+                <!-- ⭐ Rating -->
+                <div class="mb-2">
+                    @for (int i = 1; i <= 5; i++)
+                    {
+                        if (i <= fullStars)
+                        {
+                            <span class="star">★</span>
+                        }
+                        else
+                        {
+                            <span class="star gray">★</span>
+                        }
+                    }
+                </div>
+
+                <p class="text-muted mb-0">
+                    🍳 Cooked: <b>@m.TotalCookDays</b> days
+                </p>
+            </div>
+        </div>
+    }
+</div>
+
+<div class="text-center mt-4">
+    <a href="/Schedules" class="btn btn-primary m-1">📅 Schedule</a>
+    <a href="/Notifications" class="btn btn-secondary m-1">🔔 Notifications</a>
+</div>

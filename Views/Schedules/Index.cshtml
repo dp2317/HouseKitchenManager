@@ -1,0 +1,77 @@
+﻿@model List<HouseKitchenManager.Models.Schedule>
+@using HouseKitchenManager.Models
+@{
+    var members = ViewBag.Members as List<Member>;
+    int loggedIn = ViewBag.LoggedInMember;
+}
+
+<h3 class="mb-3">📅 Cooking Schedule</h3>
+
+<!-- ADD DATE -->
+<div class="card p-3 mb-4">
+    <form method="post" action="/Schedules/Save">
+        <label class="form-label">Add your cooking date</label>
+        <input type="date" name="cookDate" class="form-control mb-2" required />
+        <button class="btn btn-success w-100">Add Date</button>
+    </form>
+</div>
+
+<table class="table table-bordered text-center">
+    <thead class="table-dark">
+        <tr>
+            <th>Date</th>
+            @foreach (var m in members)
+            {
+                <th>@m.Name</th>
+            }
+        </tr>
+    </thead>
+
+    <tbody>
+        @{
+            var dates = Model
+            .Where(s => s.CookDate != null)
+            .Select(s => s.CookDate.Value.Date)
+            .Distinct()
+            .OrderBy(d => d)
+            .ToList();
+        }
+
+        @foreach (var date in dates)
+        {
+            <tr>
+                <td><b>@date.ToString("dd MMM yyyy")</b></td>
+
+                @foreach (var m in members)
+                {
+                    var schedule = Model.FirstOrDefault(s =>
+                    s.MemberId == m.Id &&
+                    s.CookDate.Value.Date == date);
+
+                    <td>
+                        @if (schedule != null)
+                        {
+                            <div>✔</div>
+
+                            <!-- ⭐ RATING (ONLY IF NOT SELF) -->
+                            @if (loggedIn != m.Id)
+                            {
+                                <form method="post" action="/Ratings/Add" class="mt-1">
+                                    <input type="hidden" name="scheduleId" value="@schedule.Id" />
+                                    <select name="stars" class="form-select form-select-sm">
+                                        <option value="1">1 ⭐</option>
+                                        <option value="2">2 ⭐</option>
+                                        <option value="3">3 ⭐</option>
+                                        <option value="4">4 ⭐</option>
+                                        <option value="5">5 ⭐</option>
+                                    </select>
+                                    <button class="btn btn-sm btn-outline-primary mt-1">Rate</button>
+                                </form>
+                            }
+                        }
+                    </td>
+                }
+            </tr>
+        }
+    </tbody>
+</table>

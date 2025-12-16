@@ -1,0 +1,22 @@
+﻿@model List<HouseKitchenManager.Models.Notification>
+
+<h3 class="mb-3">🔔 Notifications</h3>
+
+@if (!Model.Any())
+{
+    <p>No notifications yet.</p>
+}
+else
+{
+    <ul class="list-group">
+        @foreach (var n in Model)
+        {
+            <li class="list-group-item">
+                <b>@n.Message</b>
+                <div class="text-muted small">
+                    @n.CreatedAt.ToString("dd MMM yyyy hh:mm tt")
+                </div>
+            </li>
+        }
+    </ul>
+}

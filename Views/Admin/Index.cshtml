@@ -1,0 +1,42 @@
+﻿@model List<HouseKitchenManager.Models.Member>
+
+<h3>👑 Admin Dashboard</h3>
+
+<a href="/Admin/Logout" class="btn btn-sm btn-outline-danger mb-3">Logout</a>
+
+<div class="card p-3 mb-4">
+    <h5>Add New Member</h5>
+    <form method="post" action="/Admin/AddMember">
+        <input name="name" class="form-control mb-2" placeholder="Member Name" required />
+        <input name="colorHex" type="color" class="form-control form-control-color mb-2" />
+        <button class="btn btn-success">Add Member</button>
+    </form>
+</div>
+
+<table class="table table-bordered">
+    <thead class="table-dark">
+        <tr>
+            <th>Name</th>
+            <th>Username</th>
+            <th>Password</th>
+            <th>Color</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var m in Model)
+        {
+            <tr>
+                <td>@m.Name</td>
+                <td><b>@m.Username</b></td>
+                <td><b>@m.Password</b></td>
+                <td>
+                    <div style="width:20px;height:20px;border-radius:50%;background:@m.ColorHex;"></div>
+                </td>
+                <td>
+                    <a href="/Admin/Delete/@m.Id" class="btn btn-sm btn-danger">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

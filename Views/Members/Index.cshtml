@@ -1,0 +1,12 @@
+﻿@model List<HouseKitchenManager.Models.Member>
+
+<h2>House Members</h2>
+
+<a href="/Members/Create">Add Member</a>
+
+<ul>
+    @foreach (var m in Model)
+    {
+        <li>@m.Name</li>
+    }
+</ul>
