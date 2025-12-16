@@ -16,3 +16,9 @@ obj/
 # OS files
 .DS_Store
 Thumbs.db
+.vs/
+bin/
+obj/
+*.db
+*.user
+*.suo
