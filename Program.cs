@@ -4,7 +4,7 @@ using HouseKitchenManager.Data;
 var builder = WebApplication.CreateBuilder(args);
 
 // =======================
-// SERVICES (BEFORE Build)
+// SERVICES
 // =======================
 
 builder.Services.AddControllersWithViews();
@@ -20,7 +20,7 @@ builder.Services.AddSession();
 var app = builder.Build();
 
 // =======================
-// MIDDLEWARE (AFTER Build)
+// MIDDLEWARE
 // =======================
 
 if (!app.Environment.IsDevelopment())
@@ -29,13 +29,12 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
-app.UseHttpsRedirection();
+// ❌ DO NOT USE HTTPS REDIRECTION ON RAILWAY
+// app.UseHttpsRedirection();
+
 app.UseStaticFiles();
-
 app.UseRouting();
-
 app.UseSession();
-
 app.UseAuthorization();
 
 app.MapControllerRoute(
@@ -44,7 +43,7 @@ app.MapControllerRoute(
 );
 
 // =======================
-// 🔴 REQUIRED FOR RAILWAY
+// REQUIRED FOR RAILWAY
 // =======================
 
 var port = Environment.GetEnvironmentVariable("PORT") ?? "8080";
