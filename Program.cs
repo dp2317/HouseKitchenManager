@@ -3,7 +3,10 @@ using HouseKitchenManager.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Services
+// =======================
+// SERVICES
+// =======================
+
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddDbContext<AppDbContext>(options =>
@@ -16,7 +19,10 @@ builder.Services.AddSession();
 
 var app = builder.Build();
 
-// Middleware
+// =======================
+// MIDDLEWARE
+// =======================
+
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
