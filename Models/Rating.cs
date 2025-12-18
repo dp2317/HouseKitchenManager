@@ -11,8 +11,8 @@ public class Rating
 
     public int ScheduleId { get; set; }
 
-    // 🔴 RESTORED — so controllers compile
-    public int FromMemberId { get; set; }
+    // ✅ MUST MATCH CONTROLLERS
+    public int RaterMemberId { get; set; }
 
     public int Stars { get; set; }
 }
