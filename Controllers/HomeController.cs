@@ -11,6 +11,10 @@ namespace HouseKitchenManager.Controllers
         {
             _context = context;
         }
+public IActionResult Index()
+{
+    return Content("App is running");
+}
 
         public IActionResult Index()
         {
