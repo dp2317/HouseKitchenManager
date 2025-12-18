@@ -1,10 +1,13 @@
-﻿namespace HouseKitchenManager.Models
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+[Table("Ratings")]
+public class Rating
 {
-    public class Rating
-    {
-        public int Id { get; set; }
-        public int ScheduleId { get; set; }
-        public int FromMemberId { get; set; }
-        public int Stars { get; set; }
-    }
+    [Key]
+    public int Id { get; set; }
+
+    public int ScheduleId { get; set; }
+    public int RaterMemberId { get; set; }
+    public int Stars { get; set; }
 }
