@@ -13,29 +13,31 @@ namespace HouseKitchenManager.Controllers
             _context = context;
         }
 
-        public IActionResult Index()
+       public IActionResult Index()
+{
+    var summary = _context.Members
+        .Select(m => new
         {
-            var members = _context.Members.ToList();
+            m.Id,
+            m.Name,
+            m.ColorHex,
 
-            var summary = members.Select(m => new
-            {
-                m.Id,
-                m.Name,
-                m.ColorHex,
+            TotalCookDays = _context.Schedules
+                .Count(s => s.MemberId == m.Id),
 
-                TotalCookDays = _context.Schedules
-                    .Count(s => s.MemberId == m.Id),
+            AvgRating = (
+                from r in _context.Ratings
+                join s in _context.Schedules
+                    on r.ScheduleId equals s.Id
+                where s.MemberId == m.Id
+                select (double?)r.Stars
+            ).Average() ?? 0
+        })
+        .ToList();
 
-                AvgRating = _context.Ratings
-                    .Where(r => _context.Schedules
-                        .Any(s => s.Id == r.ScheduleId && s.MemberId == m.Id))
-                    .Select(r => (double?)r.Stars)
-                    .Average() ?? 0
-            }).ToList();
+    ViewBag.Summary = summary;
+    return View();
+}
 
-            ViewBag.Summary = summary;
-
-            return View();
-        }
     }
 }
