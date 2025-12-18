@@ -1,20 +1,28 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using HouseKitchenManager.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// ✅ ADD ALL SERVICES HERE (BEFORE Build)
+// =======================
+// SERVICES (BEFORE Build)
+// =======================
+
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
-
+    options.UseNpgsql(
+        builder.Configuration.GetConnectionString("DefaultConnection")
+    )
+);
 
 builder.Services.AddSession();
 
 var app = builder.Build();
 
-// ✅ MIDDLEWARE (AFTER Build)
+// =======================
+// MIDDLEWARE (AFTER Build)
+// =======================
+
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
@@ -26,12 +34,20 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
-app.UseSession(); // ✅ must be AFTER UseRouting
+app.UseSession();
 
 app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Home}/{action=Index}/{id?}"
+);
+
+// =======================
+// 🔴 REQUIRED FOR RAILWAY
+// =======================
+
+var port = Environment.GetEnvironmentVariable("PORT") ?? "8080";
+app.Urls.Add($"http://0.0.0.0:{port}");
 
 app.Run();
