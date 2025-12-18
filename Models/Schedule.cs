@@ -1,11 +1,12 @@
-﻿using System;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
-namespace HouseKitchenManager.Models
+[Table("Schedules")]
+public class Schedule
 {
-    public class Schedule
-    {
-        public int Id { get; set; }
-        public int MemberId { get; set; }
-        public DateTime? CookDate { get; set; }
-    }
+    [Key]
+    public int Id { get; set; }
+
+    public int MemberId { get; set; }
+    public DateTime CookDate { get; set; }
 }
