@@ -1,16 +1,14 @@
-﻿namespace HouseKitchenManager.Models
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+[Table("Members")]
+public class Member
 {
-    public class Member
-    {
-        public int Id { get; set; }
+    [Key]
+    public int Id { get; set; }
 
-        public string Name { get; set; }
-
-        // 🔐 Login credentials
-        public string Username { get; set; }
-        public string Password { get; set; }
-
-        // 🌈 UI color
-        public string ColorHex { get; set; } = "#0d6efd";
-    }
+    public string Name { get; set; }
+    public string Username { get; set; }
+    public string Password { get; set; }
+    public string ColorHex { get; set; }
 }
