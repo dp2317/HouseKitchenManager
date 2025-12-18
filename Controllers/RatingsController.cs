@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
+    ﻿using Microsoft.AspNetCore.Mvc;
 using HouseKitchenManager.Data;
 using HouseKitchenManager.Models;
 
@@ -24,14 +24,14 @@ namespace HouseKitchenManager.Controllers
 
             bool alreadyRated = _context.Ratings.Any(r =>
                 r.ScheduleId == scheduleId &&
-                r.FromMemberId == loggedIn);
+                r.RaterMemberId == loggedIn);
 
             if (!alreadyRated)
             {
                 _context.Ratings.Add(new Rating
                 {
                     ScheduleId = scheduleId,
-                    FromMemberId = loggedIn.Value,
+                    RaterMemberId = loggedIn.Value,
                     Stars = stars
                 });
 
