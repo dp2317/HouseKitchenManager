@@ -3,10 +3,7 @@ using HouseKitchenManager.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// =======================
-// SERVICES
-// =======================
-
+// Services
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddDbContext<AppDbContext>(options =>
@@ -19,18 +16,15 @@ builder.Services.AddSession();
 
 var app = builder.Build();
 
-// =======================
-// MIDDLEWARE
-// =======================
-
+// Middleware
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
     app.UseHsts();
 }
 
-// ❌ DO NOT USE HTTPS REDIRECTION ON RAILWAY
-// app.UseHttpsRedirection();
+// ❌ No HTTPS redirection on Railway
+// ❌ No manual port binding
 
 app.UseStaticFiles();
 app.UseRouting();
@@ -41,12 +35,5 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}"
 );
-
-// =======================
-// REQUIRED FOR RAILWAY
-// =======================
-
-var port = Environment.GetEnvironmentVariable("PORT") ?? "8080";
-app.Urls.Add($"http://0.0.0.0:{port}");
 
 app.Run();
