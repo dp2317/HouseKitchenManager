@@ -11,5 +11,5 @@ public class AppDbContext : DbContext
     public DbSet<Member> Members { get; set; }
     public DbSet<Schedule> Schedules { get; set; }
     public DbSet<Rating> Ratings { get; set; }
-    public DbSet<Notification> Notifications { get; set; } // ✅ ADD THIS
+    public DbSet<Notification> Notifications { get; set; }
 }
